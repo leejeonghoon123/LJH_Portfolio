@@ -85,6 +85,26 @@ pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설�
 
 
 
+![WFS 2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/386f0899-5057-4b80-960a-a0c0438f5ec3)
+
+
 ![WFS 1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/559df7ec-77d8-4789-9c61-85d7c657ef60)
 
 레이어만 가져오게되면 해당하는 지역의 데이터들을 알 수 없기때문에 WFS 파일로 가져와서 해당하는 레이어의 이미지도 바꾸어주었다.
+
+------------------------------------------------------------------------------------------------------------------------
+    
+    마우스 오버시 해당하는 지역의 정보 팝업창 생성
+    
+![팝업창1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/61ea58e0-615b-4dc6-ac6e-ccc13e8448f0)
+
+![팝업창2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/9166e1ac-ce2f-4e26-9ffe-82f1fc785c05)
+
+![팝업창3](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/18571f0f-bb7b-4fa3-8b87-0fe8cebfe25d)
+
+![팝업창4](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/e56c3a9c-2195-4727-b3c2-7ce6457cefa1)
+
+마우스 오버하는 레이어의 해당하는 정보들을 나타낼 수 있게 layer.js에 코드를 작성하였고, 팝업창 또한 main.jsp에 만들어 두었다.
+
+모든 레이어에서 마우스 오버 시 팝업창이 나타나지 않도록 레이어 필터를 통해 해당하는 레이어를 지정해주었고, 오버레이또한 각각 설정해 주었다.
+
