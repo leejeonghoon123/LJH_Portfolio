@@ -10,12 +10,17 @@
    <link type="text/css" href="style/main.css" rel="stylesheet">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script defer src="script/main/main.js"></script>
+	
+
 </head>
- <script type="module" src="main.js"></script>
+ 	<script type="module" src="main.js"></script>
     <!-- OpenLayers 라이브러리 스타일시트 -->
     <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
     <!-- OpenLayers 라이브러리 자바스크립트 파일 -->
     <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
+
+    
 <body>
    <section class="gis">
 
@@ -70,7 +75,8 @@
                                                                                                    <li>${list4.name}</li>
                                                                                                 </c:when>
                                                                                                 <c:otherwise>
-                                                                                                   <li><input type="checkbox" class="checkLayer" id="checkLayer${list4.id}">${list4.name}</li>
+                                                                                                     <input type="checkbox" class="checkLayer" id="checkLayer${list4.id}">
+  																									 ${list4.name}<br>
                                                                                                 </c:otherwise>
                                                                                              </c:choose>
                                                                                           </c:if>
@@ -79,16 +85,15 @@
                                                                                  </li>
                                                                               </c:when>
                                                                               <c:otherwise>
-                                                                                 <li><input type="checkbox" class="checkLayer" id="checkLayer${list3.id}">${list3.name}</li>
-                                                                              </c:otherwise>
-                                                                           </c:choose>
+                                                                                 <input type="checkbox" class="checkLayer" id="checkLayer${list3.id}">${list3.name}<br>                                                                              </c:otherwise>
+                                                                          	  </c:choose>
                                                                         </c:if>
                                                                      </c:forEach>
                                                                   </ul>
                                                                </li>
                                                             </c:when>
                                                             <c:otherwise>
-                                                               <li><input type="checkbox" class="checkLayer" id="checkLayer${list2.id}">${list2.name}</li>
+                                                               <input type="checkbox" class="checkLayer" id="checkLayer${list2.id}">${list2.name}<br> 
                                                             </c:otherwise>
                                                          </c:choose>
                                                       </c:if>
@@ -97,7 +102,7 @@
                                              </li>
                                           </c:when>
                                           <c:otherwise>
-                                             <li><input type="checkbox" class="checkLayer" id="checkLayer${list1.id}">${list1.name}</li>
+                                             <input type="checkbox" class="checkLayer" id="checkLayer${list1.id}">${list1.name}<br> 
                                           </c:otherwise>
                                        </c:choose>
                                     </c:if>
@@ -116,9 +121,9 @@
             <div class="gis-map-btn">
                <ul class="gis-map-btn-option">
                   <li class="map">
-                  <a href="#void" style="display: flex; align-items: center;">
-						  <img src="images/gis/i-map.svg" style="width: 20px; margin-right: 5px; margin-bottom: 48px; margin-left: 15px;">
-						  <span style="margin-left: -32px; margin-bottom: 10px;">배경지도</span>
+                  <a href="#void" style="display: flex; align-items: center;" onclick="changeMapImage()">
+                    <img src="images/gis/i-map.svg" id="mapImg" style="width: 20px; margin-right: 5px; margin-bottom: 48px; margin-left: 15px;">
+                    <span style="margin-left: -32px; margin-bottom: 10px;">배경지도</span>
                       </a>
                      <div class="info">
                         <div class="info-find">
@@ -130,10 +135,11 @@
                      </div>
                   </li>
                   
-                  <li class="layer"><a href="#void" style="display: flex; align-items: center;">
-						  <img src="images/gis/i-layer.svg" style="width: 23px; margin-right: 5px; margin-bottom: 48px; margin-left: 14px;">
-						  <span style="margin-left: -30px; margin-bottom: 10px;">레이어</span>
+                  <li class="layer"><a href="#void" style="display: flex; align-items: center;" onclick="changeLayerImage()">
+                    <img src="images/gis/i-layer.svg" id="layerImg" style="width: 23px; margin-right: 5px; margin-bottom: 48px; margin-left: 14px;">
+                    <span style="margin-left: -30px; margin-bottom: 10px;">레이어</span>
                       </a>
+
                      <div class="info">
                        <h4>레이어<button type="button" class="btn-close"></button></h4>
                        <div class="info-inner">
@@ -145,14 +151,26 @@
                            <input class="layer" type="checkbox" id="fishery_observatory">
                            <label for="fishery_observatory">실시간 해양환경 관측소</label>
                          </div>
+                         
+                         <div class="inputWrap">
+                           <input class="layer" type="checkbox" checked id="proteted_area">
+                           <label for="proteted_area">보호구역</label>
+                         </div>
+                         
+                         <div class="inputWrap">
+                           <input class="layer" type="checkbox" checked id="ctp_rvb">
+                           <label for="ctp_rvb">시,도 구분</label>
+                         </div>
+                         
                        </div>
                      </div>
                   </li>
                   <li class="legend">
-                  <a href="#void" style="display: flex; align-items: center;">
-						  <img src="images/gis/i-legend.svg" style="width: 19px; margin-right: 5px; margin-bottom: 48px; margin-left: 16px;">
-						  <span style="margin-left: -24px; margin-bottom: 10px;">범례</span>
+                    <a href="#void" style="display: flex; align-items: center;"  onclick="changeLegendImage()">
+                    <img src="images/gis/i-legend.svg" id="legendImg"  style="width: 19px; margin-right: 5px; margin-bottom: 48px; margin-left: 16px;">
+                    <span style="margin-left: -24px; margin-bottom: 10px;">범례</span>
                       </a>
+
                      <div class="info">
                         <h4>범례<button type="button" class="btn-close"></button></h4>
                         <div class="info-inner">
@@ -177,24 +195,27 @@
                      </div>
                   </li>
                   
-                           <li class="draw">
-                      <a href="#void" style="display: flex; align-items: center;">
-						  <img src="images/gis/draw.PNG" style="width: 17px; margin-right: 5px; margin-bottom: 48px; margin-left: 18px;">
-						  <span style="margin-left: -28px; margin-bottom: 10px;">그리기</span>
+                  <li class="draw">
+                      <a href="#void" style="display: flex; align-items: center;" onclick="changePenImage()">
+                    <img src="images/gis/pen.png" id="penImg"  style="width: 17px; margin-right: 5px; margin-bottom: 48px; margin-left: 18px;">
+                    <span style="margin-left: -28px; margin-bottom: 10px;">그리기</span>
                       </a>
+
                       <div class="info">
                           <h4>그리기<button type="button" class="btn-close"></button></h4>
                           <form>
-                              <label for="type">Measurement type &nbsp;</label>
+
+                           <!--    <label for="type">Measurement type &nbsp;</label> -->
                               <select id="type">
-                                  <option value="LineString">Length (LineString)</option>
-                                  <option value="Polygon">Area (Polygon)</option>
+                                 <option value="LineString">&nbsp;&nbsp;&nbsp;&nbsp;라인스트링&nbsp;&nbsp;&nbsp;&nbsp;</option> 
+                                  <option value="Polygon">&nbsp;&nbsp;&nbsp;&nbsp;폴리곤&nbsp;&nbsp;&nbsp;&nbsp;</option>
                               </select>
-                              <button onclick="resetMap()">초기화</button>
+                               <button class="button" onclick="resetMap()">초기화</button>
+   							   <button class="button" onclick="removeInteraction()">&nbsp;종료&nbsp;</button>
+
                           </form>
                       </div>
                   </li>
-                     
                   
                </ul>
                <ul class="gis-map-btn-click">
@@ -803,12 +824,33 @@
       <script defer src="script/main/cluster.js"></script>
       
     <div id="custom-modal" class="custom-modal">
-     <div class="custom-modal-content">
-       <span class="custom-close" onclick="closeCustomModal()">&times;</span>
-       <h3>폴리곤 영역 정보</h3>
-       <!-- <ul id="coordinates-list"></ul> -->
-       <ul id="content-list"></ul>
-     </div>
+		<div class="custom-modal-dialog">
+			<div class="custom-modal-content">
+				<div class="custom-modal-header">
+					<button type="button" class="btn-close" onclick="closeCustomModal()" 
+					data-bs-dismiss="modal" aria-label="Close">
+					</button>
+					<p class="custom-modal-title" id="customModalLabel"
+					style="font-size: 14px; font-weight: normal; color: #666666;">결과보고서</p>
+					<hr>
+				</div>
+				<div class="custom-modal-body">
+					<h2 class="custom-table-title" style="font-size: 12px; color: #555555;">
+					지리정보 분석결과</h2>
+					<table id="custom-table">
+						<thead>
+							<tr>
+								<th>어장도명</th>
+								<th>면적</th>
+							</tr>
+						</thead>
+						<tbody id="fishery_table_tbody">
+						<!-- 어장정보 위치 -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
    </div>
    
    <script type="text/javascript">
@@ -829,4 +871,6 @@
           customModal.style.display = "none";
         }
    </script>
+  
+
 </body>

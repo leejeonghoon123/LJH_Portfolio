@@ -125,19 +125,24 @@ function updateLayerByName(name) {
 map.addLayer(protectedAreaLayer);
 map.addLayer(sidoEdgeLayer);
 
-// 어장도 레이어 입력
- var fishingGroundLayer = new ol.layer.Tile({
-   source : new ol.source.TileWMS({
-      url : 'http://210.113.102.169:8090/geoserver/EDU5/wms?service=WMS', // 1. 레이어 URL
-      params : {
-         'VERSION' : '1.1.0', // 2. 버전
-         'LAYERS' : 'EDU5:fishingGround_jh', // 3. 작업공간:레이어 명
-         'BBOX' : [128.09794, 34.85631667, 128.50822, 35.07274722], 
-         'SRS' : 'EPSG:4326', // SRID
-         'FORMAT' : 'image/png' // 포맷
-      },
-      serverType : 'geoserver',
-   })
+// 보호구역 체크박스 클릭 이벤트 처리
+var protectedAreaCheckbox = document.getElementById('proteted_area');
+protectedAreaCheckbox.addEventListener('change', function() {
+    if (!this.checked) {
+        map.removeLayer(protectedAreaLayer);
+    } else {
+        map.addLayer(protectedAreaLayer);
+    }
+});
+
+// 시도 구분 체크박스 클릭 이벤트 처리
+var ctpRvbCheckbox = document.getElementById('ctp_rvb');
+ctpRvbCheckbox.addEventListener('change', function() {
+    if (!this.checked) {
+        map.removeLayer(sidoEdgeLayer);
+    } else {
+        map.addLayer(sidoEdgeLayer);
+    }
 });
 
 // 체크박스 요소 선택
@@ -249,7 +254,14 @@ map.on('pointermove', function(event) {
   // 클릭한 좌표 주변의 피처 가져오기
   var features = map.getFeaturesAtPixel(pixel);
 
+  // 폴리곤 그리기 기능이 실행 중인지 확인
+  var isDrawing = map.getInteractions().getArray().some(function(interaction) {
+    return interaction instanceof ol.interaction.Draw;
+  });
+
   // 팝업 닫기 
+
+  if (!isDrawing) {	
   overlay.setPosition(undefined);
 
   if (features && features.length > 0) {
@@ -260,35 +272,57 @@ map.on('pointermove', function(event) {
     // 팝업에 피처 정보를 표시
     var overlayElement = overlay.getElement();
     var observatory_nm = overlayElement.querySelector('#observatory_nm');
-    var observatory_date = overlayElement.querySelector('.date');
+    //var observatory_date = overlayElement.querySelector('.date');
     var surface_class = overlayElement.querySelector('#surface_class');
     var middle_class = overlayElement.querySelector('#middle_class');
     var low_class = overlayElement.querySelector('#low_class');
-    var temp = overlayElement.querySelector('#temp');
+    //var temp = overlayElement.querySelector('#temp');
     var salt = overlayElement.querySelector('#salt');
     var oxygen = overlayElement.querySelector('#oxygen');
     
     // null 체크 함수 
     function nullCheck(checkedElement){
-		return checkedElement != null ? checkedElement : '미설치';
-	}
+      return checkedElement != null ? checkedElement : '미설치';
+   }
+    
+   function formatTime(time) {
+     var date = new Date(time);
+     var year = date.getFullYear();
+     var month = (date.getMonth() + 1).toString().padStart(2, '0');
+     var day = date.getDate().toString().padStart(2, '0');
+     var hour = date.getHours().toString().padStart(2, '0');
+     var min = date.getMinutes().toString().padStart(2, '0');
+     var sec = date.getSeconds().toString().padStart(2, '0');
+     
+     return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
+   }
+
+    // 수온 null 체크 함수 
+    function nullCheckWtr(checkedElement){
+      return checkedElement != null ? checkedElement+'℃' : '미설치';
+   }
+    
+    // 산소 null 체크 함수 
+    function nullCheckOxygen(checkedElement){
+      return checkedElement != null ? checkedElement+'mg/L' : '미설치';
+   }
     
     // 팝업창에 정보 입력
-    observatory_nm.innerHTML = nullCheck(properties['observator']).replace(/\(.*\)/g, '')+'<span class="date">'+ (properties['obsdtm'] != null ? properties['obsdtm'] : '자료없음' )+'</span>';
-    surface_class.innerText = nullCheck(properties['wtrtmp1']);
-    middle_class.innerText = nullCheck(properties['wtrtmp2']);
-    low_class.innerText = nullCheck(properties['wtrtmp3']);
-    temp.innerText = nullCheck(properties['low-class']);
-    salt.innerText = nullCheck(properties['cdt1']);
-    oxygen.innerText = nullCheck(properties['dox1']);
+    observatory_nm.innerHTML = nullCheck(properties['observator']).replace(/\(.*\)/g, '')+
+   '<span class="date">'+ (properties['obsDtm'] != null ? formatTime(properties['obsDtm']) : '자료없음' )+'</span>';
+    surface_class.innerText = nullCheckWtr(properties['wtrTmp_1']);
+    middle_class.innerText = nullCheckWtr(properties['wtrTmp_2']);
+    low_class.innerText = nullCheckWtr(properties['wtrTmp_3']);
+    //temp.innerText = nullCheck(properties['low_class']);
+    salt.innerText = nullCheck(properties['cdt_1']);
+    oxygen.innerText = nullCheckOxygen(properties['dox_1']);
     
     
     // 팝업을 클릭한 피처의 위치에 표시 
     overlay.setPosition(event.coordinate);
   }
+}
 });
-
-
      
 //------------------------------------------------------------------------------------
 // 화면 줌인/ 아웃 버튼
@@ -376,7 +410,6 @@ let drawLayer = new ol.layer.Vector({
                 console.log(polygonCoordinates);
 				console.log(intersectionFeatures);
 				// 모달 창 열기
-				// openCustomModal(polygonCoordinates);
 				openCustomModal(intersectionFeatures);
             });
 
@@ -408,17 +441,42 @@ let drawLayer = new ol.layer.Vector({
 	
 	function openCustomModal(features) {
 	    var customModal = document.getElementById('custom-modal');
-	    var contentList = document.getElementById('content-list');
+	    var customTable = document.getElementById('custom-table');
 	    customModal.style.display = "block";
-	    contentList.innerHTML = '';
+		var tbody = customTable.querySelector('tbody');
+	    tbody.innerHTML = '';
+
+		var hasResult = false;
 
 	    features.forEach(function(feature) {
-			var listItem = document.createElement('li');
+			var row = document.createElement('tr');
+			console.log(feature);
 			var licenseNu = feature.license_nu;
-			var fisherySpace = feature.fishery_space;
-			listItem.textContent = "어장도명: " + licenseNu + ", 면적: " + fisherySpace;
-			contentList.appendChild(listItem);
+			let fisherySpace = feature.fishery_space;
+			
+			if (fisherySpace !== null) {
+				hasResult = true;	// 값이 존재하는 경우 값을 true로 변경
+			
+				var cell1 = document.createElement('td');
+				cell1.textContent = licenseNu;
+				row.appendChild(cell1);
+				
+				var cell2 = document.createElement('td');
+				cell2.textContent = fisherySpace + "(m²)";
+				row.appendChild(cell2);
+				
+				tbody.appendChild(row);
+			}
 	    });
+		
+		if (!hasResult) {
+			var row = document.createElement('tr');
+			var cell = document.createElement('td');
+			cell.colSpan = 2;
+			cell.textContent = "해당 결과 없음";
+			row.appendChild(cell);
+			tbody.appendChild(row);
+		}
 	}
 	
 	function closeCustomModal() {
