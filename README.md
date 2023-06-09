@@ -12,9 +12,11 @@
 
     내가 만든 파트
 
---
 
-  파이썬 크롤링부분
+
+
+
+    파이썬 크롤링부분
 
 
 ![파이썬 크롤링 1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/c73e60e7-4d29-4268-900e-db0019276c9d)
@@ -27,3 +29,6 @@ pj4.py 코드를 통해 관측지점별 실시간 어장정보를 xml로 받아�
 ![파이썬 크롤링 2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/9250d4e1-6bb2-406f-bf51-84ddcf252b8e)
 
 pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설정을 통해 스스로 갱신되도록 하였다.
+--
+--
+
