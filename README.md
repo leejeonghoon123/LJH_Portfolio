@@ -49,6 +49,20 @@ pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설�
     자바 개발
     
 
+검색파트
+
+![화면1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/44d5d280-92a0-4a13-b666-462c8b5c2775)
+
+![화면2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/012c5056-3658-426b-abcb-a99abbbd4d05)
+
+![화면3](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/db5d2aee-57be-425c-9d81-37658e221213)
+
+![화면4](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/a90329f0-7a84-4054-9326-5ed7114bbce2)
+
+![검색1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/2f2a1210-4b65-4324-91a7-b604c09acbf4)
+
+
+
 
 
 
