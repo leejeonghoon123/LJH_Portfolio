@@ -23,5 +23,14 @@ pj4.py 코드를 통해 관측지점별 실시간 어장정보를 xml로 받아�
 
 ![파이썬 크롤링 2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/9250d4e1-6bb2-406f-bf51-84ddcf252b8e)
 
-pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설정을 통해 스스로 갱신되도록 하였다.
+pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설정을 통해 매일 10분간격으로 실행되어 DB에 저장되도록 하였다.
+
+지오서버 레이어 발행
+
+
+![지오서버 레이어1](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/8990b610-1fd8-495d-b795-735aedd1df77)
+![지오서버 레이어2](https://github.com/leejeonghoon123/LJH_Portfolio/assets/127282120/00097360-a453-4ad1-8fb4-7211ce0f9f29)
+저장된 DB를 조인하여 해당 지역 정보들을 가지고 있는 레이어를 발행하였다.
+
+
 
