@@ -40,25 +40,28 @@ var clusterDistance = distance.value; // 클러스터링 거리 설정
 // rnd_layer 스타일 설정
 var rndClusterStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 10,
+    radius: 12,
     fill: new ol.style.Fill({ color: 'rgba(0, 255, 0, 0.5)' }),
     stroke: new ol.style.Stroke({ color: 'blue', width: 1 })
   }),
   text: new ol.style.Text({
     text: '',
-    fill: new ol.style.Fill({ color: '#fff' })
+    fill: new ol.style.Fill({ color: '#fff' }),
+ 	font: 'bold 12px Arial'
   })
 });
+
 // marine_eis_data_layer 스타일 설정
 var marineClusterStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 10,
+    radius: 12,
     fill: new ol.style.Fill({ color: 'rgba(0, 0, 255, 0.5)' }),
     stroke: new ol.style.Stroke({ color: 'blue', width: 1 })
   }),
   text: new ol.style.Text({
     text: '',
-    fill: new ol.style.Fill({ color: '#fff' })
+    fill: new ol.style.Fill({ color: '#fff' }),
+ 	font: 'bold 12px Arial'
   })
 });
 
@@ -150,7 +153,7 @@ function clusterLayerUpdate(){
 	rndClusterLayer.getSource().getSource().clear();
 	rndClusterLayer.setSource(newRndCluster);
 	
-	//marine 클러스터 레이어 변경
+	// marine 클러스터 레이어 변경
 	var newMarineVectorSource = new ol.source.Vector({
   		format: new ol.format.GeoJSON(),
   		url: function(extent) {
@@ -180,42 +183,7 @@ distance.addEventListener('input', function() {
 	rndClusterLayer.getSource().setDistance(parseInt(distance.value, 10));
 });
 
-//------------------------------------------------------------------------------------
-// 클러스터 클릭시 이벤트 생성. 
-// 2023-05-31 조경민 : 현재는 사용 안함(수정중: 사용하려면 main.jsp에 map-info id를 가진 div 추가)
-/*
-var selectClusterLayer = new ol.interaction.Select({
-  layers: [rndClusterLayer, marineClusterLayer],
-  condition: ol.events.condition.click
+map.on('moveend', function() {
+  clusterLayerUpdate();
 });
-
-map.addInteraction(selectClusterLayer);
-
-map.on('singleClick', function (evt) {
-	    document.getElementById('map-info').innerHTML = '';
-	    
-	    var viewResolution = map.getView().getResolution();
-	    var url = clusterLayer.getSource().getGetFeatureInfoUrl(
-	        evt.coordinate, viewResolution, 'EPSG:4326',
-	        { 'INFO_FORMAT': 'text/html' }
-	    );
-	    var frame;
-	    
-	    if (url) {
-		    $.ajax({
-				url: url,
-	    		method: 'GET',
-	    		dataType: 'text'
-			}).done(function(response){
-				document.getElementById('map-info').innerHTML =response;
-				console.log(frame);
-			}).fail(function(error){
-				console.log(error.responseText);
-			})
-	    }
-	    
-	    
-});
-
-*/
 
