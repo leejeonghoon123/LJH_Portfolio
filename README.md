@@ -10,7 +10,9 @@
 
 프로젝트 PPT, 시연영상 링크
 
-https://docs.google.com/presentation/d/1vNGspycCsCDl5jX8talV7dcGltMqetTu/edit?usp=sharing&ouid=111395906769681143444&rtpof=true&sd=true
+https://docs.google.com/presentation/d/1vNGspycCsCDl5jX8talV7dcGltMqetTu/edit?usp=drive_link&ouid=111395906769681143444&rtpof=true&sd=true
+
+
 
 ------------------------------------------------------------------------------------------------------------------------
 
