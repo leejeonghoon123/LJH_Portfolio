@@ -128,5 +128,6 @@ pj4.py 파일의 경우 실시간 정보이기 떄문에 작업스케줄러 설�
 
 모든 레이어에서 마우스 오버 시 팝업창이 나타나지 않도록 레이어 필터를 통해 해당하는 레이어를 지정해주었고, 오버레이또한 각각 설정해 주었다.
 
-         참고  project_education > src/main > webapp > script > main > layer.js 232줄 ~ 401줄 
+         참고   project_education > src/main > webapp > script > main > layer.js 232줄 ~ 401줄 
+         모달창 project_education > src/main > webapp > WEB-INF > jsp/egovframework > gis > main.jsp  252줄 ~ 340줄
 
