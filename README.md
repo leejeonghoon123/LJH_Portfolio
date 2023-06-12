@@ -9,7 +9,8 @@
 파이썬 크롤링을 이용한 전자정부 프레임 워크 지리정보 표시 웹 사이트
 
 프로젝트 PPT, 시연영상 링크
-https://docs.google.com/presentation/d/1vNGspycCsCDl5jX8talV7dcGltMqetTu/edit#slide=id.p1
+
+https://docs.google.com/presentation/d/1vNGspycCsCDl5jX8talV7dcGltMqetTu/edit?usp=sharing&ouid=111395906769681143444&rtpof=true&sd=true
 
 ------------------------------------------------------------------------------------------------------------------------
 
