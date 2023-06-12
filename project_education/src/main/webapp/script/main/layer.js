@@ -231,8 +231,6 @@ var wfsLayer = new ol.layer.Vector({
 
 //------------------------------------------------------------------------------------
 // 실시간 관측소 클릭시 이벤트 생성. 
-// 2023-06-01 조경민
-
 // Overlay 요소를 생성하여 feature 정보를 표시할 팝업을 추가
 var overlay = new ol.Overlay({
   element: document.getElementById('real_time_inform'),
