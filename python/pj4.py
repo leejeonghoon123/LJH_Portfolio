@@ -13,7 +13,7 @@ formatted_date = today.strftime("%Y%m%d")
 
 gru_nam_list = ['001', '002', '003']
 
-conn = psycopg2.connect(database="mentee5", user="postgres", password="sundo12#$", host="210.113.102.169", port="5432")
+conn = psycopg2.connect(database="database", user="user", password="password#$", host="123.123.123.123", port="1234")
 cur = conn.cursor()
 
 for gru_nam in gru_nam_list:
